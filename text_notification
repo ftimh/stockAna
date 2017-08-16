@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
+import tushare as ts
+import datetime
+from twilio.rest import TwilioRestClient
+
+
+def text2user(text, price):
+    account_sid = "twilio account sid"
+    auth_token = "twilio account token"
+    client = TwilioRestClient(account_sid, auth_token)
+    
+    mainContent = "The price is " + str(price) + " ."   
+    message = client.messages.create(to="to user cellphone number", from_="from twilio cellphone number", body=mainContent + text)
+    return message
+
+text = "Unknow"
+
+df = ts.get_realtime_quotes('stock code') #Single stock symbol
+print(df[['code','name','price','bid','ask','volume','amount','time']])
+
+print('test price')
+print(df['price'])
+
+print(df['time'])
+#if (datetime.datetime.now() > df['time']):
+#    print ("Past")
+#else:
+#    print("Future")
+#if float(df['price']) > 19.6:
+#    text2user("higher", df['price'])
+#else:
+#    text2user("lower", df['price'])
